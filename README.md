@@ -96,6 +96,25 @@ pip install -r requirements.txt
 
 > `torch` is a large package (~2GB). This step may take several minutes.
 
+```
+Create folder static\audio in the root folder to store audio [auto generated]
+```
+### Final Folder Structure
+```
+empathy_engine/
+├── app.py              
+├── emotion.py
+├── voice_mapper.py
+├── ssml_builder.py
+├── tts_engine.py
+├── preload_model.py
+├── requirements.txt
+├── render.yaml 
+├── templates/
+│   └── index.html
+└── static/
+    └── audio/
+
 ### 5. Get your ElevenLabs API key
 
 ```
