@@ -96,8 +96,6 @@ pip install -r requirements.txt
 
 > `torch` is a large package (~2GB). This step may take several minutes.
 
-```
-```
 ### 5. Get your ElevenLabs API key
 
 ```
@@ -151,6 +149,7 @@ Open your browser and go to: **http://127.0.0.1:5000**
 **Test sentences to hear the difference:**
 
 | Emotion | Example |
+|---|---|
 |  Happy | `This is the best news I've heard all year!` |
 |  Angry | `This is completely unacceptable and I am furious!` |
 |  Sad | `I can't believe they're gone. I really miss them.` |
@@ -245,11 +244,10 @@ Questions naturally end with a rising inflection. Slowing slightly adds thoughtf
 
 ---
 
-
 ## Tech Stack
 
 | Component | Technology | Purpose |
-
+|---|---|---|
 | Web framework | Flask | HTTP server + routing |
 | Emotion detection | HuggingFace Transformers (`j-hartmann/emotion-english-distilroberta-base`) | 7-class emotion classification |
 | Text-to-speech | ElevenLabs API (`eleven_flash_v2`) | Neural voice generation |
