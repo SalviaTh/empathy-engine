@@ -72,7 +72,7 @@ sudo apt install ffmpeg
 ### 2. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/empathy-engine.git
+git clone https://github.com/SalviaTh/empathy-engine.git
 cd empathy-engine
 ```
 
@@ -275,4 +275,6 @@ Questions naturally end with a rising inflection. Slowing slightly adds thoughtf
 | DSP effects | scipy (Butterworth filters) | EQ shaping per emotion |
 | Deployment | Render | Free cloud hosting |
 
+---
+Ignore render.yaml for now i created it for deployment purpose
 ---
