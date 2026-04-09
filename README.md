@@ -114,7 +114,7 @@ empathy_engine/
 │   └── index.html
 └── static/
     └── audio/
-
+```
 ### 5. Get your ElevenLabs API key
 
 ```
