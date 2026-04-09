@@ -1,0 +1,10 @@
+flask
+transformers
+torch
+elevenlabs
+pydub
+librosa
+soundfile
+numpy
+scipy
+gunicorn

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: empathy-engine
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --timeout 120
+    envVars:
+      - key: ELEVENLABS_API_KEY
+        sync: false          # you'll enter this manually in Render dashboard
+    disk:
+      name: audio-storage
+      mountPath: /opt/render/project/src/static/audio
+      sizeGB: 1

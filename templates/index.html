@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Empathy Engine</title>
+  <style>
+    * { box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      }
+    body { font-family: sans-serif; background: #f0f2f5;
+           display: flex; justify-content: center; padding: 48px 16px; }
+    .card { background: white; border-radius: 16px; padding: 32px;
+            width: 100%; max-width: 660px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+    h2 { font-size: 22px; margin-bottom: 6px; }
+    .EMOTION_happy{ 
+      background:#d4f5dd;
+      color:#1a7a3a; 
+    }
+    .EMOTION_angry{
+      background:#fde8e8; 
+      color:#b02020; }
+    .EMOTION_sad{
+      background:#dde8f5; 
+      color:#1a3a7a; }
+.EMOTION_frustrate{ 
+      background:#e8f0de; 
+      color:#3a5a1a; }
+.EMOTION_neutral{ 
+      background:#e8e8ee; 
+      color:#444466; }
+.EMOTION_surprise{ 
+      background:#fff4cc; 
+      color:#8a6500; }
+.EMOTION_inquisitive { 
+      background:#d6eeff; 
+      color:#0055aa; }
+    p.sub { color: #666; font-size: 14px; margin-bottom: 20px; }
+    textarea { width: 100%; height: 110px; font-size: 15px; padding: 12px;
+               border: 1px solid #ddd; border-radius: 10px;
+               resize: vertical; outline: none; }
+    textarea:focus { border-color: #5b4bd5; }
+    button { 
+              margin-top: 12px;
+              width: 100%; padding: 12px;
+              font-size: 16px;
+              background: #5b4bd5;
+              color: white;
+              border: none;
+              border-radius: 10px;
+              cursor: pointer; 
+              transition: background .2s; }
+    button:hover { 
+      background: #4a3bc4; }
+    button:disabled { 
+      background: #aaa; 
+      cursor: not-allowed; }
+
+    #result { 
+      margin-top: 24px;
+       display: none; }
+    .emotion-row { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      margin-bottom: 12px;
+     }
+    .emotion-badge { 
+      padding: 5px 14px; 
+      border-radius: 20px;
+      font-size: 13px; 
+      font-weight: 600; }
+    .intensity-bar-wrap { 
+      flex: 1; 
+      background: #eee; 
+      border-radius: 6px; 
+      height: 8px; }
+    .intensity-bar { 
+      height: 8px; 
+      border-radius: 6px;
+      background: #5b4bd5; transition: width .4s; }
+      #ipct{
+            font-size:13px;
+            color:#888
+      }
+      .player{
+        width: 100%;
+      }
+      .dl-btn{
+        text-align: center;
+        width: 100%;
+        margin-top:8px;
+        padding:12px;
+        background:#5b4bd5;
+        color:white;
+        border-radius:10px;
+        font-size:16px;
+        text-decoration:none;
+      }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h2>🎙️ Empathy Engine</h2>
+  <p class="sub">Type anything: the AI detects emotion from the input text and speaks out with emotion.</p>
+
+  <textarea id="text" placeholder='Try: "This is absolutely incredible news!" or "I cannot believe this is broken again."'></textarea>
+  <button id="btn" onclick="synthesize()">▶ Speak it</button>
+
+  <div id="result">
+  <div class="emotion-row">
+    <span id="badge" class="emotion-badge">—</span>
+    <div class="intensity-bar-wrap">
+      <div id="ibar" class="intensity-bar"></div>
+    </div>
+    <span id="ipct" >0%</span>
+  </div>
+
+  <audio id="player" class="player" controls></audio>
+  <a id="dl-btn" class="dl-btn" href="#" download>
+    ⬇ Download audio
+  </a>
+</div>
+</div>
+
+<script>
+const COLORS = {
+    happy:       "EMOTION_happy",
+    angry:       "EMOTION_angry",
+    sad:         "EMOTION_sad",
+    disgusted:   "EMOTION_frustrated",
+    neutral:     "EMOTION_neutral",
+    surprise:    "EMOTION_surprise",
+    inquisitive: "EMOTION_inquisitive",
+};
+
+const ICONS = {
+    happy:       "Happy",
+    angry:       "Angry",
+    sad:         "Sad",
+    disgusted:   "Frustrated",
+    neutral:     "Neutral",
+    surprise:    "Surprise",
+    inquisitive: "Inquisitive",
+};
+
+async function synthesize() {
+  const text = document.getElementById("text").value.trim();
+  if (!text) return;
+
+  const btn = document.getElementById("btn");
+  btn.textContent = "⏳ Processing…"; btn.disabled = true;
+
+  const res  = await fetch("/synthesize", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({text})
+  });
+  const d = await res.json();
+
+  // Emotion badge
+const badge = document.getElementById("badge");
+badge.textContent = ICONS[d.emotion] || d.emotion;
+badge.className = "emotion-badge " + (COLORS[d.emotion] || "");
+
+// Intensity bar
+const pct = Math.round(d.intensity * 100);
+document.getElementById("ibar").style.width = pct + "%";
+document.getElementById("ipct").textContent = pct + "%";
+
+// Audio player
+const player = document.getElementById("player");
+player.src = d.audio_url + "?t=" + Date.now();
+
+// Download button
+const dlBtn = document.getElementById("dl-btn");
+dlBtn.href = d.audio_url;
+dlBtn.download = `empathy_${d.emotion}.mp3`;
+dlBtn.style.display = "inline-block";
+
+document.getElementById("result").style.display = "block";
+btn.textContent = "▶ Speak it";
+btn.disabled = false;
+}
+</script>
+</body>
+</html>
