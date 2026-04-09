@@ -254,6 +254,5 @@ Questions naturally end with a rising inflection. Slowing slightly adds thoughtf
 | Pitch shifting | librosa (phase vocoder) | Independent pitch control |
 | Audio editing | pydub | Loading, volume, export |
 | DSP effects | scipy (Butterworth filters) | EQ shaping per emotion |
-| Deployment | Render | Free cloud hosting |
 
 ---
