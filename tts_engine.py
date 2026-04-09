@@ -6,10 +6,10 @@ from pydub import AudioSegment
 from pydub.effects import normalize, compress_dynamic_range
 from scipy.signal import butter, sosfilt
 
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "static", "audio")
+OUTPUT_DIR = "static/audio"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-ELEVENLABS_API_KEY =os.environ.get("ELEVENLABS_API_KEY","");
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY", "")
 VOICE_ID = "cgSgspJ2msm6clMCkdW9"   
 #Voice id: Jessica - Playful, Bright, Warm
 MODEL_ID  = "eleven_turbo_v2_5"

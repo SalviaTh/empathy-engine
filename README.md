@@ -276,5 +276,6 @@ Questions naturally end with a rising inflection. Slowing slightly adds thoughtf
 | Deployment | Render | Free cloud hosting |
 
 ---
-Ignore render.yaml for now i created it for deployment purpose
+---
+
 ---
